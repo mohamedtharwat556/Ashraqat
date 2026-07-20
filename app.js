@@ -62,7 +62,8 @@ if (themeBtn) {
 
 // ===== Days Counter =====
 function calculateDays() {
-    const startDate = new Date(2026, 3, 10); // April 10, 2026
+    // Change this date to your actual start date
+    const startDate = new Date(2025, 0, 1); // January 1, 2025
     const today = new Date();
     
     // If start date is in future, return 0
@@ -70,8 +71,14 @@ function calculateDays() {
         return 0;
     }
     
-    const diffTime = Math.abs(today - startDate);
+    // Calculate days difference
+    const diffTime = today - startDate;
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+    
+    console.log('Start Date:', startDate);
+    console.log('Today:', today);
+    console.log('Days:', diffDays);
+    
     return diffDays;
 }
 
@@ -163,29 +170,35 @@ function speakText(text) {
 
 // ===== Intro Screen =====
 function initIntro() {
-    const btnEnter = document.querySelector('.btn-enter');
-    if (btnEnter) {
-        btnEnter.addEventListener('click', function(e) {
+    // Delay to ensure DOM is fully loaded
+    setTimeout(() => {
+        const btnEnter = document.querySelector('.btn-enter');
+        
+        if (!btnEnter) {
+            console.error('❌ btn-enter not found in DOM!');
+            return;
+        }
+        
+        console.log('✅ btn-enter found, adding click listener');
+        
+        btnEnter.onclick = function(e) {
+            console.log('🔴 Button clicked!');
             e.preventDefault();
-            e.stopPropagation();
-            console.log('✅ Enter button clicked!');
-            try {
-                const introScreen = document.querySelector('.intro-screen');
-                const mainPage = document.querySelector('.main-page');
-                console.log('introScreen exists:', !!introScreen);
-                console.log('mainPage exists:', !!mainPage);
-                if (introScreen && mainPage) {
-                    introScreen.style.display = 'none';
-                    mainPage.style.display = 'block';
-                    console.log('✅ Pages switched successfully!');
-                }
-            } catch (err) {
-                console.error('Error in intro:', err);
+            
+            const introScreen = document.querySelector('.intro-screen');
+            const mainPage = document.querySelector('.main-page');
+            
+            console.log('introScreen:', introScreen ? '✅ found' : '❌ not found');
+            console.log('mainPage:', mainPage ? '✅ found' : '❌ not found');
+            
+            if (introScreen && mainPage) {
+                console.log('🎯 Switching pages...');
+                introScreen.style.display = 'none';
+                mainPage.style.display = 'block';
+                console.log('✅ Pages switched!');
             }
-        });
-    } else {
-        console.log('❌ btnEnter not found!');
-    }
+        };
+    }, 500);
 }
 
 // تشغيل عند تحميل الصفحة
