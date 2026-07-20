@@ -9,21 +9,23 @@ function initializeMusic() {
     }
 }
 
-musicBtn.addEventListener('click', () => {
-    initializeMusic();
-    
-    if (isMusicPlaying) {
-        bgMusic.pause();
-        musicBtn.classList.remove('playing');
-        musicBtn.textContent = '🔇';
-        isMusicPlaying = false;
-    } else {
-        bgMusic.play();
-        musicBtn.classList.add('playing');
-        musicBtn.textContent = '🎵';
-        isMusicPlaying = true;
-    }
-});
+if (musicBtn) {
+    musicBtn.addEventListener('click', () => {
+        initializeMusic();
+        
+        if (isMusicPlaying) {
+            bgMusic.pause();
+            musicBtn.classList.remove('playing');
+            musicBtn.textContent = '🔇';
+            isMusicPlaying = false;
+        } else {
+            bgMusic.play();
+            musicBtn.classList.add('playing');
+            musicBtn.textContent = '🎵';
+            isMusicPlaying = true;
+        }
+    });
+}
 
 document.addEventListener('click', () => {
     if (!isMusicPlaying && !bgMusic) {
@@ -41,20 +43,22 @@ const savedTheme = localStorage.getItem('theme') || 'dark';
 
 if (savedTheme === 'light') {
     document.body.classList.add('light-mode');
-    themeBtn.textContent = '☀️';
+    if (themeBtn) themeBtn.textContent = '☀️';
 }
 
-themeBtn.addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-    
-    if (document.body.classList.contains('light-mode')) {
-        themeBtn.textContent = '☀️';
-        localStorage.setItem('theme', 'light');
-    } else {
-        themeBtn.textContent = '🌙';
-        localStorage.setItem('theme', 'dark');
-    }
-});
+if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('light-mode');
+        
+        if (document.body.classList.contains('light-mode')) {
+            themeBtn.textContent = '☀️';
+            localStorage.setItem('theme', 'light');
+        } else {
+            themeBtn.textContent = '🌙';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+}
 
 // ===== Days Counter =====
 function calculateDays() {
@@ -353,27 +357,32 @@ const spinMessages = [
     'روحي تاعتك يا حبيبتي'
 ];
 
-document.querySelector('.spin-btn').addEventListener('click', () => {
-    const wheel = document.getElementById('spinWheel');
-    const randomRotation = Math.random() * 360 + 720;
-    
-    wheel.style.transition = 'transform 4s cubic-bezier(0.33, 0.66, 0.66, 1)';
-    wheel.style.transform = `rotate(${randomRotation}deg)`;
-    
-    // Create particles (تقليل من 20 لـ 10)
-    for (let i = 0; i < 10; i++) {
-        createSpinParticle();
-    }
-    
-    setTimeout(() => {
-        const selectedIndex = Math.floor((randomRotation % 360) / 45);
-        const message = spinMessages[selectedIndex];
-        document.getElementById('gameResult').innerHTML = `
-            <h3>${message}</h3>
-            <p>💕</p>
-        `;
-        speakText(message);
-        createSpinHearts();
+const spinBtn = document.querySelector('.spin-btn');
+if (spinBtn) {
+    spinBtn.addEventListener('click', () => {
+        const wheel = document.getElementById('spinWheel');
+        const randomRotation = Math.random() * 360 + 720;
+        
+        wheel.style.transition = 'transform 4s cubic-bezier(0.33, 0.66, 0.66, 1)';
+        wheel.style.transform = `rotate(${randomRotation}deg)`;
+        
+        // Create particles (تقليل من 20 لـ 10)
+        for (let i = 0; i < 10; i++) {
+            createSpinParticle();
+        }
+        
+        setTimeout(() => {
+            const selectedIndex = Math.floor((randomRotation % 360) / 45);
+            const message = spinMessages[selectedIndex];
+            document.getElementById('gameResult').innerHTML = `
+                <h3>${message}</h3>
+                <p>💕</p>
+            `;
+            speakText(message);
+            createSpinHearts();
+        }, 4000);
+    });
+}
     }, 4000);
 });
 
@@ -522,11 +531,14 @@ function endTimeGame() {
 }
 
 // ===== Game Navigation =====
-document.querySelector('.btn-game').addEventListener('click', () => {
-    document.querySelector('.main-page').style.display = 'none';
-    document.querySelector('.game-page').style.display = 'block';
-    initMemoryGame();
-});
+const btnGame = document.querySelector('.btn-game');
+if (btnGame) {
+    btnGame.addEventListener('click', () => {
+        document.querySelector('.main-page').style.display = 'none';
+        document.querySelector('.game-page').style.display = 'block';
+        initMemoryGame();
+    });
+}
 
 document.querySelectorAll('.game-type-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -663,35 +675,43 @@ let currentSubjectIndex = 0;
 let isStudying = false;
 let timerInterval_study = null;
 
-btnStudy.addEventListener('click', () => {
-    mainPage.style.display = 'none';
-    gamePage.style.display = 'none';
-    studyPage.style.display = 'block';
-    speakText('وضع المذاكرة، اضيفي مواد اليوم');
-});
+if (btnStudy) {
+    btnStudy.addEventListener('click', () => {
+        mainPage.style.display = 'none';
+        gamePage.style.display = 'none';
+        studyPage.style.display = 'block';
+        speakText('وضع المذاكرة، اضيفي مواد اليوم');
+    });
+}
 
-document.getElementById('backFromStudy').addEventListener('click', () => {
-    stopStudying();
-    mainPage.style.display = 'block';
-    studyPage.style.display = 'none';
-});
+const backFromStudyBtn = document.getElementById('backFromStudy');
+if (backFromStudyBtn) {
+    backFromStudyBtn.addEventListener('click', () => {
+        stopStudying();
+        mainPage.style.display = 'block';
+        studyPage.style.display = 'none';
+    });
+}
 
-document.querySelector('.btn-add-subject').addEventListener('click', () => {
-    const subjectName = document.getElementById('subjectInput').value;
-    const hours = document.getElementById('hoursInput').value;
-    
-    if (subjectName.trim()) {
-        subjects.push({
-            name: subjectName,
-            hours: parseInt(hours) || 1,
-            minutes: (parseInt(hours) || 1) * 50
-        });
+const btnAddSubject = document.querySelector('.btn-add-subject');
+if (btnAddSubject) {
+    btnAddSubject.addEventListener('click', () => {
+        const subjectName = document.getElementById('subjectInput').value;
+        const hours = document.getElementById('hoursInput').value;
         
-        document.getElementById('subjectInput').value = '';
-        document.getElementById('hoursInput').value = '1';
-        updateSubjectsList();
-    }
-});
+        if (subjectName.trim()) {
+            subjects.push({
+                name: subjectName,
+                hours: parseInt(hours) || 1,
+                minutes: (parseInt(hours) || 1) * 50
+            });
+            
+            document.getElementById('subjectInput').value = '';
+            document.getElementById('hoursInput').value = '1';
+            updateSubjectsList();
+        }
+    });
+}
 
 function updateSubjectsList() {
     const list = document.getElementById('subjectsList');
@@ -719,23 +739,26 @@ function removeSubject(idx) {
     updateSubjectsList();
 }
 
-document.querySelector('.btn-start-study').addEventListener('click', () => {
-    if (subjects.length === 0) {
-        alert('أضيفي مادة واحدة على الأقل!');
-        return;
-    }
-    
-    isStudying = true;
-    currentSubjectIndex = 0;
-    
-    const beforeMsg = beforeStartMessages[Math.floor(Math.random() * beforeStartMessages.length)];
-    speakText(beforeMsg);
-    
-    document.querySelector('.study-setup').style.display = 'none';
-    document.getElementById('studyTimer').style.display = 'block';
-    
-    startStudying();
-});
+const btnStartStudy = document.querySelector('.btn-start-study');
+if (btnStartStudy) {
+    btnStartStudy.addEventListener('click', () => {
+        if (subjects.length === 0) {
+            alert('أضيفي مادة واحدة على الأقل!');
+            return;
+        }
+        
+        isStudying = true;
+        currentSubjectIndex = 0;
+        
+        const beforeMsg = beforeStartMessages[Math.floor(Math.random() * beforeStartMessages.length)];
+        speakText(beforeMsg);
+        
+        document.querySelector('.study-setup').style.display = 'none';
+        document.getElementById('studyTimer').style.display = 'block';
+        
+        startStudying();
+    });
+}
 
 function startStudying() {
     const subject = subjects[currentSubjectIndex];
@@ -1174,18 +1197,26 @@ updateStatistics();
 
 
 // ===== Share Buttons =====
-document.getElementById('shareWhatsApp').addEventListener('click', () => {
-    const text = 'أشرقت ❤️ - موقع حب وتحفيز مذاكرة\n\nادخلي واكتشفي الحب والدعم في كل جملة!\n\nhttps://ashraqat.vercel.app';
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/?text=${encoded}`, '_blank');
-});
+const shareWhatsApp = document.getElementById('shareWhatsApp');
+const copyLinkBtn = document.getElementById('copyLink');
 
-document.getElementById('copyLink').addEventListener('click', () => {
-    const link = window.location.href;
-    navigator.clipboard.writeText(link).then(() => {
-        speakText('تم نسخ الرابط!');
-        alert('تم نسخ الرابط! 💕');
-    }).catch(() => {
-        alert('حاولي مرة أخرى');
+if (shareWhatsApp) {
+    shareWhatsApp.addEventListener('click', () => {
+        const text = 'أشرقت ❤️ - موقع حب وتحفيز مذاكرة\n\nادخلي واكتشفي الحب والدعم في كل جملة!\n\nhttps://ashraqat.vercel.app';
+        const encoded = encodeURIComponent(text);
+        window.open(`https://wa.me/?text=${encoded}`, '_blank');
     });
+}
+
+if (copyLinkBtn) {
+    copyLinkBtn.addEventListener('click', () => {
+        const link = window.location.href;
+        navigator.clipboard.writeText(link).then(() => {
+            speakText('تم نسخ الرابط!');
+            alert('تم نسخ الرابط! 💕');
+        }).catch(() => {
+            alert('حاولي مرة أخرى');
+        });
+    });
+}
 });
