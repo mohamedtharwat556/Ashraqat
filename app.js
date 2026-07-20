@@ -62,8 +62,8 @@ if (themeBtn) {
 
 // ===== Days Counter =====
 function calculateDays() {
-    // Change this date to your actual start date
-    const startDate = new Date(2025, 0, 1); // January 1, 2025
+    // 102 days ago from July 20, 2026 = April 9, 2026
+    const startDate = new Date(2026, 3, 9); // April 9, 2026
     const today = new Date();
     
     // If start date is in future, return 0
@@ -169,6 +169,26 @@ function speakText(text) {
 }
 
 // ===== Intro Screen =====
+function enterMainPage() {
+    console.log('🎯 enterMainPage called!');
+    
+    const introScreen = document.querySelector('.intro-screen');
+    const mainPage = document.querySelector('.main-page');
+    
+    console.log('introScreen:', introScreen ? '✅' : '❌');
+    console.log('mainPage:', mainPage ? '✅' : '❌');
+    
+    if (introScreen) {
+        introScreen.style.display = 'none';
+        console.log('✅ Intro hidden');
+    }
+    
+    if (mainPage) {
+        mainPage.style.display = 'block';
+        console.log('✅ Main page shown');
+    }
+}
+
 function initIntro() {
     // Delay to ensure DOM is fully loaded
     setTimeout(() => {
@@ -179,25 +199,7 @@ function initIntro() {
             return;
         }
         
-        console.log('✅ btn-enter found, adding click listener');
-        
-        btnEnter.onclick = function(e) {
-            console.log('🔴 Button clicked!');
-            e.preventDefault();
-            
-            const introScreen = document.querySelector('.intro-screen');
-            const mainPage = document.querySelector('.main-page');
-            
-            console.log('introScreen:', introScreen ? '✅ found' : '❌ not found');
-            console.log('mainPage:', mainPage ? '✅ found' : '❌ not found');
-            
-            if (introScreen && mainPage) {
-                console.log('🎯 Switching pages...');
-                introScreen.style.display = 'none';
-                mainPage.style.display = 'block';
-                console.log('✅ Pages switched!');
-            }
-        };
+        console.log('✅ btn-enter found');
     }, 500);
 }
 
