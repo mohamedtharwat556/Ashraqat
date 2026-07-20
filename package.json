@@ -1,0 +1,13 @@
+{
+  "name": "ashraqat",
+  "version": "1.0.0",
+  "description": "أشرقت - موقع حب وتحفيز مذاكرة",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000"
+  },
+  "keywords": ["ashraqat", "love", "study", "motivation", "pwa"],
+  "author": "Made with love",
+  "license": "MIT"
+}

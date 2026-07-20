@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="theme-color" content="#ff69b4">
+    <meta name="description" content="أشرقت - موقع حب وتحفيز للمذاكرة مع رسائل وألعاب وضع مذاكرة ذكي">
+    <meta name="keywords" content="أشرقت، حب، مذاكرة، تحفيز، ألعاب، دعم">
+    <meta name="author" content="تم إنشاؤه بحب">
+    <meta property="og:title" content="أشرقت ❤️ - موقع الحب والدعم">
+    <meta property="og:description" content="موقع مخصص لأشرقت - رسائل حب، ألعاب، ووضع مذاكرة ذكي">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'><rect fill='%231a1a2e' width='1200' height='630'/><text x='600' y='400' font-size='200' text-anchor='middle' fill='%23ff69b4' font-family='Arial'>أشرقت ❤️</text></svg>">
+    <title>أشرقت ❤️</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='50' font-size='80' text-anchor='middle' dominant-baseline='middle' x='50'>❤️</text></svg>">
+</head>
+<body>
+    <!-- Audio Player -->
+    <audio id="bgMusic" loop>
+        <source src="08.Ayami_Maak.mp3" type="audio/mpeg">
+    </audio>
+    
+    <canvas id="canvas"></canvas>
+    
+    <!-- Music Control Button -->
+    <button id="musicBtn" class="music-btn" title="تشغيل الموسيقى">🎵</button>
+    
+    <!-- Dark/Light Mode Toggle -->
+    <button id="themeBtn" class="theme-btn" title="تبديل الوضع">🌙</button>
+    
+    <div class="main-container">
+        <!-- الشاشة الأولية -->
+        <div class="intro-screen active">
+            <div class="intro-content">
+                <h1 class="intro-title">أشرقت ❤️</h1>
+                <p class="intro-subtitle">لأجملِ قلب في هذا الكون</p>
+                <div class="days-counter">
+                    <p class="days-text">أيامنا معاً</p>
+                    <div class="days-display">
+                        <span id="daysCount">0</span>
+                        <span class="days-unit">يوم</span>
+                    </div>
+                </div>
+                <button class="btn-enter">ادخلي معايا 💕</button>
+            </div>
+        </div>
+
+        <!-- الصفحة الرئيسية -->
+        <div class="main-page">
+            <div class="stars"></div>
+            
+            <div class="content">
+                <div class="header">
+                    <h1>يا أشرقت</h1>
+                    <p class="subtitle">ما زال اسمك أول دعاء في قلبي</p>
+                </div>
+
+                <!-- معرض الصور -->
+                <div class="gallery-section">
+                    <div class="gallery-container">
+                        <div class="photo-frame frame1"><img src="photo1.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame2"><img src="photo2.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame3"><img src="photo3.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame4"><img src="photo4.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame5"><img src="photo5.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame6"><img src="photo6.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame7"><img src="photo7.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame8"><img src="photo8.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame9"><img src="photo9.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame10"><img src="photo10.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame11"><img src="photo11.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame12"><img src="photo12.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame13"><img src="photo13.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame14"><img src="photo14.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame15"><img src="photo15.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame16"><img src="photo16.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame17"><img src="photo17.jpg" alt="أشرقت"></div>
+                        <div class="photo-frame frame18"><img src="photo18.jpg" alt="أشرقت"></div>
+                    </div>
+                </div>
+
+                <!-- الرسائل -->
+                <div class="messages-section">
+                    <div class="message-card">
+                        <p>لو كان الاعتذار وردة، لزرعت لك بستانًا كاملًا</p>
+                    </div>
+                    <div class="message-card">
+                        <p>أنتِ لستِ مجرد ذكرى، أنتِ الحكاية التي لا أريد لها نهاية</p>
+                    </div>
+                    <div class="message-card">
+                        <p>بين نبضةٍ وأخرى، ينطق قلبي باسمك دون أن يشعر</p>
+                    </div>
+                    <div class="message-card">
+                        <p>أحنّ إليك كما يحن الفجر لأول شعاع</p>
+                    </div>
+                    <div class="message-card">
+                        <p>في كل مرة أشتاق إليك، أكتشف أن قلبي ما زال يسكن عندك</p>
+                    </div>
+                    <div class="message-card">
+                        <p>يا أشرقت، لو للزعل آخر، فقلبي أول الراجعين إليك</p>
+                    </div>
+                    <div class="message-card">
+                        <p>أشرقتِ اسمًا، وأشرقتِ في قلبي نورًا، فلا تطفئيه بالخصام</p>
+                    </div>
+                    <div class="message-card">
+                        <p>ما بيني وبينك حكاية، لا يليق بها الوداع، بل يليق بها الغفران</p>
+                    </div>
+                    <div class="message-card">
+                        <p>وإن كان في القلب ذنب، ففيه ألف اعتذار، وكلها تنادي باسمك يا أشرقت</p>
+                    </div>
+                    <div class="message-card">
+                        <p>لا أريد انتصارًا في خلافنا، أريد فقط أن تعود ابتسامتك</p>
+                    </div>
+                    <div class="message-card">
+                        <p>كل الطرق بعدك طويلة، وكل الأيام دون رضاك ناقصة</p>
+                    </div>
+                    <div class="message-card">
+                        <p>إن كان للعتاب باب، فقلبي أول الواقفين عليه، وإن كان للصفح وطن، فأنت وطنه</p>
+                    </div>
+                    <div class="message-card">
+                        <p>يا أشرقت، ما خُلقتِ للخصام، ولا خُلق قلبي لفراقك</p>
+                    </div>
+                </div>
+
+                <!-- زر اللعبة -->
+                <div class="game-section">
+                    <button class="btn-game">اللعبة 🎮 اختبري حبي</button>
+                    <button class="btn-study">المذاكرة 📚 أنا معاك</button>
+                </div>
+                
+                <!-- Share Buttons -->
+                <div class="share-section">
+                    <p class="share-text">شاركي الحب 💕</p>
+                    <div class="share-buttons">
+                        <button class="btn-share" id="shareWhatsApp" title="شارك على WhatsApp">
+                            <span style="font-size: 1.5rem;">💬</span> WhatsApp
+                        </button>
+                        <button class="btn-share" id="copyLink" title="انسخي الرابط">
+                            <span style="font-size: 1.5rem;">🔗</span> انسخي
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- شاشة المذاكرة -->
+        <div class="study-page">
+            <div class="study-header">
+                <h2>🎓 وضع المذاكرة الذكي</h2>
+                <button class="btn-back" id="backFromStudy">← رجعي</button>
+            </div>
+
+            <div class="study-container">
+                <!-- الجدول والعداد -->
+                <div class="study-setup">
+                    <h3>جدول المذاكرة</h3>
+                    <div class="subjects-input">
+                        <input type="text" id="subjectInput" placeholder="أكتبي اسم المادة (مثلاً: رياضيات، إنجليزي)">
+                        <input type="number" id="hoursInput" placeholder="الساعات" min="1" max="5" value="1">
+                        <button class="btn-add-subject">أضيفي المادة ➕</button>
+                    </div>
+                    
+                    <div class="subjects-list" id="subjectsList">
+                        <p style="color: var(--light-pink);">الموادك بتاعة اليوم</p>
+                    </div>
+
+                    <div class="study-actions">
+                        <button class="btn-start-study">ابدئي المذاكرة 💪</button>
+                    </div>
+                </div>
+
+                <!-- أثناء المذاكرة -->
+                <div class="study-timer" id="studyTimer" style="display: none;">
+                    <h3 id="currentSubject">رياضيات</h3>
+                    <div class="timer-display">
+                        <div class="time-big">
+                            <span id="timerMinutes">50</span>:<span id="timerSeconds">00</span>
+                        </div>
+                        <p id="encouragement">استمري يا حبيبتي! أنا معاك! 💕</p>
+                    </div>
+                    
+                    <div class="timer-buttons">
+                        <button class="btn-pause" id="pauseBtn">⏸️ توقفي شوي</button>
+                        <button class="btn-next" id="nextBtn">➡️ المادة اللي بعدها</button>
+                    </div>
+
+                    <div class="timer-info">
+                        <p>المادة الحالية: <span id="infoSubject">-</span></p>
+                        <p>الموادك الباقية: <span id="infoRemaining">-</span></p>
+                    </div>
+                </div>
+
+                <!-- استراحة ذكية -->
+                <div class="break-page" id="breakPage" style="display: none;">
+                    <h3>وقت الاستراحة ☕</h3>
+                    <div class="break-content">
+                        <div class="break-activity">
+                            <p id="breakMessage" style="font-size: 1.2rem; margin: 20px 0;"></p>
+                        </div>
+                        
+                        <div class="break-joke" id="breakJoke" style="display: none; margin: 30px 0;">
+                            <div class="joke-content">
+                                <p class="joke-setup" id="jokeSetup"></p>
+                                <p class="joke-punchline" id="jokePunchline"></p>
+                                <p class="joke-reaction" id="jokeReaction"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="break-love-msg" id="breakLoveMsg" style="display: none;">
+                            <p id="loveMsgText" style="font-size: 1.1rem; color: var(--pink); font-weight: bold;"></p>
+                        </div>
+                        
+                        <button class="btn-continue">استرخت كفاية، ترجعي! 💪</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- سجل النجاح -->
+            <div class="success-log">
+                <h4>سجل نجاحك ⭐</h4>
+                <div class="stars-display" id="starsDisplay"></div>
+                <p id="achievementText" style="color: var(--light-pink); margin-top: 10px;"></p>
+                
+                <!-- إحصائيات إضافية -->
+                <div class="stats-section" id="statsSection" style="margin-top: 20px; padding-top: 20px; border-top: 2px solid var(--pink);">
+                    <div class="stat-box">
+                        <span class="stat-label">🔥 أيام متتالية</span>
+                        <span class="stat-value" id="streakValue">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">📚 إجمالي الساعات</span>
+                        <span class="stat-value" id="totalHoursValue">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">📅 أيام مذاكرة</span>
+                        <span class="stat-value" id="studyDaysValue">0</span>
+                    </div>
+                </div>
+                
+                <!-- آخر جلسة مذاكرة -->
+                <div class="last-session" id="lastSessionDiv" style="margin-top: 20px; padding: 15px; background: rgba(255, 105, 180, 0.1); border-radius: 10px; display: none;">
+                    <p id="lastSessionText" style="color: var(--light-pink);"></p>
+                </div>
+                
+                <!-- زر عرض السجل الكامل -->
+                <button class="btn-view-history" id="btnViewHistory" style="margin-top: 20px; margin-right: 10px;">📊 عرض السجل الكامل</button>
+                <button class="btn-advanced-stats" id="btnAdvancedStats" style="margin-top: 20px;">📈 إحصائيات متقدمة</button>
+            </div>
+        </div>
+
+        <!-- لوحة الإحصائيات المتقدمة -->
+        <div class="advanced-stats" id="advancedStats" style="display: none;">
+            <div class="stats-header">
+                <h3>📈 إحصائيات الأداء</h3>
+                <button class="btn-close-stats" onclick="document.getElementById('advancedStats').style.display = 'none'">✕</button>
+            </div>
+            
+            <div class="stats-tabs">
+                <button class="stat-tab active" onclick="showStatTab('weekly')">📅 أسبوعي</button>
+                <button class="stat-tab" onclick="showStatTab('monthly')">📆 شهري</button>
+                <button class="stat-tab" onclick="showStatTab('topics')">📚 المواد</button>
+            </div>
+            
+            <!-- الإحصائيات الأسبوعية -->
+            <div class="stat-content" id="weekly-stats">
+                <div class="chart-container">
+                    <canvas id="weeklyChart" width="400" height="300"></canvas>
+                </div>
+                <div class="stat-details" id="weeklyDetails"></div>
+            </div>
+            
+            <!-- الإحصائيات الشهرية -->
+            <div class="stat-content" id="monthly-stats" style="display: none;">
+                <div class="chart-container">
+                    <canvas id="monthlyChart" width="400" height="300"></canvas>
+                </div>
+                <div class="stat-details" id="monthlyDetails"></div>
+            </div>
+            
+            <!-- إحصائيات المواد -->
+            <div class="stat-content" id="topics-stats" style="display: none;">
+                <div class="topics-list" id="topicsList"></div>
+            </div>
+        </div>
+
+        <!-- History Modal -->
+        <div class="history-modal" id="historyModal">
+            <div class="history-content">
+                <h3>📊 سجل المذاكرة الكامل</h3>
+                <div id="historyList"></div>
+                <button class="close-history" onclick="document.getElementById('historyModal').classList.remove('active')">إغلقي ✕</button>
+            </div>
+        </div>
+
+        <!-- شاشة اللعبة -->
+        <div class="game-page">
+            <div class="game-header">
+                <h2>لعبة القلوب 💕</h2>
+                <button class="btn-back">← رجعي</button>
+            </div>
+            <div class="game-stats">
+                <p>الحركات: <span id="moves">0</span></p>
+                <p>الوقت: <span id="timer">0</span>ث</p>
+                <p>النقاط: <span id="score">0</span></p>
+            </div>
+            <div class="game-selector">
+                <button class="game-type-btn active" data-game="memory">🎮 ذاكرة</button>
+                <button class="game-type-btn" data-game="spin">🎡 دوار القلوب</button>
+                <button class="game-type-btn" data-game="time">⏰ الوقت الجميل</button>
+            </div>
+            <div class="game-board" id="gameBoard"></div>
+            <div class="spin-wheel-container" id="spinContainer" style="display: none;">
+                <div class="spin-wheel" id="spinWheel">
+                    <div class="wheel-segment" style="--i: 0;">❤️</div>
+                    <div class="wheel-segment" style="--i: 1;">💕</div>
+                    <div class="wheel-segment" style="--i: 2;">💖</div>
+                    <div class="wheel-segment" style="--i: 3;">💗</div>
+                    <div class="wheel-segment" style="--i: 4;">💝</div>
+                    <div class="wheel-segment" style="--i: 5;">💘</div>
+                    <div class="wheel-segment" style="--i: 6;">💞</div>
+                    <div class="wheel-segment" style="--i: 7;">💓</div>
+                </div>
+                <button class="spin-btn">اختبري حظك 🍀</button>
+            </div>
+            <div class="time-game-container" id="timeContainer" style="display: none;">
+                <div class="time-selector">
+                    <button class="time-btn" data-time="morning">
+                        <span class="time-icon">🌅</span>
+                        <span>الصباح</span>
+                    </button>
+                    <button class="time-btn" data-time="afternoon">
+                        <span class="time-icon">☀️</span>
+                        <span>الظهيرة</span>
+                    </button>
+                    <button class="time-btn" data-time="evening">
+                        <span class="time-icon">🌅</span>
+                        <span>المساء</span>
+                    </button>
+                    <button class="time-btn" data-time="night">
+                        <span class="time-icon">🌙</span>
+                        <span>الليل</span>
+                    </button>
+                </div>
+                <div class="time-questions" id="timeQuestions" style="display: none;">
+                    <div class="question-box">
+                        <p class="question-text" id="questionText"></p>
+                        <div class="question-options" id="questionOptions"></div>
+                    </div>
+                </div>
+                <div class="time-message" id="timeMessage" style="display: none;">
+                    <p id="messageBig"></p>
+                    <button class="btn-back" style="margin-top: 20px;">العودة للألعاب 🎮</button>
+                </div>
+            </div>
+            <div class="game-result" id="gameResult"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker registered'))
+                .catch(err => console.log('SW registration failed:', err));
+        }
+    </script>
+</body>
+</html>
