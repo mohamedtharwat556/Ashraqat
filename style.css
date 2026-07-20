@@ -147,7 +147,7 @@ body.light-mode .theme-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 1000;
     opacity: 1;
     transition: opacity 0.8s ease-out;
 }
@@ -237,6 +237,7 @@ body.light-mode .theme-btn {
     min-height: 100vh;
     padding: 40px 20px;
     position: relative;
+    display: none;
 }
 
 .content {

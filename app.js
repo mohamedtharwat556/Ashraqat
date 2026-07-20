@@ -156,14 +156,19 @@ function initIntro() {
     const btnEnter = document.querySelector('.btn-enter');
     if (btnEnter) {
         btnEnter.addEventListener('click', () => {
+            console.log('Enter button clicked!');
             const introScreen = document.querySelector('.intro-screen');
             const mainPage = document.querySelector('.main-page');
+            console.log('introScreen:', introScreen);
+            console.log('mainPage:', mainPage);
             if (introScreen && mainPage) {
                 introScreen.style.display = 'none';
                 mainPage.style.display = 'block';
                 speakText('مرحبا يا أشرقت، أنا هنا معاك');
             }
         });
+    } else {
+        console.log('btnEnter not found!');
     }
 }
 
