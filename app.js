@@ -82,7 +82,23 @@ function calculateDays() {
     return diffDays;
 }
 
-document.getElementById('daysCount').textContent = calculateDays();
+// Initialize days counter when DOM is ready
+function initDaysCounter() {
+    const daysCountEl = document.getElementById('daysCount');
+    if (daysCountEl) {
+        daysCountEl.textContent = calculateDays();
+        console.log('✅ Days counter initialized');
+    } else {
+        console.error('❌ daysCount element not found');
+    }
+}
+
+// Call on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initDaysCounter);
+} else {
+    initDaysCounter();
+}
 
 // ===== Canvas Petals (Optimized) =====
 const canvas = document.getElementById('canvas');
