@@ -171,6 +171,7 @@ function speakText(text) {
 // ===== Intro Screen =====
 function enterMainPage() {
     console.log('🎯 enterMainPage called!');
+    alert('الزر اشتغل! 🎉');
     
     const introScreen = document.querySelector('.intro-screen');
     const mainPage = document.querySelector('.main-page');
@@ -187,6 +188,9 @@ function enterMainPage() {
         mainPage.style.display = 'block';
         console.log('✅ Main page shown');
     }
+    
+    // Force scroll to top
+    window.scrollTo(0, 0);
 }
 
 function initIntro() {
