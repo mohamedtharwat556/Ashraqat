@@ -62,10 +62,16 @@ if (themeBtn) {
 
 // ===== Days Counter =====
 function calculateDays() {
-    const startDate = new Date(2026, 3, 10);
+    const startDate = new Date(2026, 3, 10); // April 10, 2026
     const today = new Date();
+    
+    // If start date is in future, return 0
+    if (today < startDate) {
+        return 0;
+    }
+    
     const diffTime = Math.abs(today - startDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
     return diffDays;
 }
 
@@ -159,20 +165,26 @@ function speakText(text) {
 function initIntro() {
     const btnEnter = document.querySelector('.btn-enter');
     if (btnEnter) {
-        btnEnter.addEventListener('click', () => {
-            console.log('Enter button clicked!');
-            const introScreen = document.querySelector('.intro-screen');
-            const mainPage = document.querySelector('.main-page');
-            console.log('introScreen:', introScreen);
-            console.log('mainPage:', mainPage);
-            if (introScreen && mainPage) {
-                introScreen.style.display = 'none';
-                mainPage.style.display = 'block';
-                // Removed speakText - was causing delays
+        btnEnter.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('✅ Enter button clicked!');
+            try {
+                const introScreen = document.querySelector('.intro-screen');
+                const mainPage = document.querySelector('.main-page');
+                console.log('introScreen exists:', !!introScreen);
+                console.log('mainPage exists:', !!mainPage);
+                if (introScreen && mainPage) {
+                    introScreen.style.display = 'none';
+                    mainPage.style.display = 'block';
+                    console.log('✅ Pages switched successfully!');
+                }
+            } catch (err) {
+                console.error('Error in intro:', err);
             }
         });
     } else {
-        console.log('btnEnter not found!');
+        console.log('❌ btnEnter not found!');
     }
 }
 
