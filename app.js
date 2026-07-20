@@ -145,10 +145,14 @@ window.addEventListener('resize', () => {
 
 // ===== Text to Speech =====
 function speakText(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ar-EG';
-    utterance.rate = 1.0;
-    window.speechSynthesis.speak(utterance);
+    try {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ar-EG';
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+    } catch (e) {
+        console.log('Speech error:', e);
+    }
 }
 
 // ===== Intro Screen =====
@@ -164,7 +168,7 @@ function initIntro() {
             if (introScreen && mainPage) {
                 introScreen.style.display = 'none';
                 mainPage.style.display = 'block';
-                speakText('مرحبا يا أشرقت، أنا هنا معاك');
+                // Removed speakText - was causing delays
             }
         });
     } else {
