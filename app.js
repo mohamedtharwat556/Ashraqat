@@ -148,6 +148,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('gameBoard').style.display = gameType === 'memory' ? 'grid' : 'none';
             document.getElementById('spinContainer').style.display = gameType === 'spin' ? 'block' : 'none';
             document.getElementById('timeContainer').style.display = gameType === 'time' ? 'block' : 'none';
+            
+            if (gameType === 'memory') {
+                initMemoryGame();
+            }
         });
     });
     
@@ -225,3 +229,206 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+
+// ===== GAMES =====
+
+// ===== Memory Game =====
+let memoryCards = [
+    'بحبك', 'بحبك', 'أشرقت', 'أشرقت',
+    'معاك', 'معاك', 'قلبي', 'قلبي',
+    'أنتِ', 'أنتِ', 'جميلة', 'جميلة'
+];
+let flipped = [];
+let matched = 0;
+let moves = 0;
+let startTime = 0;
+let timerInterval = null;
+
+function initMemoryGame() {
+    memoryCards = [...memoryCards].sort(() => Math.random() - 0.5);
+    document.getElementById('gameBoard').innerHTML = '';
+    flipped = [];
+    matched = 0;
+    moves = 0;
+    document.getElementById('moves').textContent = moves;
+    document.getElementById('score').textContent = 0;
+    startTime = Date.now();
+    
+    if (timerInterval) clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        document.getElementById('timer').textContent = Math.floor((Date.now() - startTime) / 1000);
+    }, 100);
+    
+    memoryCards.forEach((msg, idx) => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.textContent = '❓';
+        card.dataset.index = idx;
+        card.addEventListener('click', () => flipCard(card, idx));
+        document.getElementById('gameBoard').appendChild(card);
+    });
+}
+
+function flipCard(cardEl, index) {
+    if (flipped.includes(index) || flipped.length > 1) return;
+    
+    flipped.push(index);
+    cardEl.textContent = memoryCards[index];
+    cardEl.classList.add('flipped');
+    
+    if (flipped.length === 2) {
+        moves++;
+        document.getElementById('moves').textContent = moves;
+        
+        if (memoryCards[flipped[0]] === memoryCards[flipped[1]]) {
+            matched++;
+            document.getElementById('score').textContent = matched;
+            
+            if (matched === memoryCards.length / 2) {
+                endMemoryGame();
+            }
+            flipped = [];
+        } else {
+            setTimeout(() => {
+                document.querySelectorAll('.game-card').forEach(card => {
+                    if (card.dataset.index == flipped[0] || card.dataset.index == flipped[1]) {
+                        card.textContent = '❓';
+                        card.classList.remove('flipped');
+                    }
+                });
+                flipped = [];
+            }, 1000);
+        }
+    }
+}
+
+function endMemoryGame() {
+    clearInterval(timerInterval);
+    const seconds = Math.floor((Date.now() - startTime) / 1000);
+    const score = 1000 - (moves * 10) - seconds;
+    document.getElementById('score').textContent = Math.max(score, 0);
+    
+    document.getElementById('gameResult').innerHTML = `
+        <h3>انتِ فزتِ! 🎉</h3>
+        <p>المحاولات: ${moves}</p>
+        <p>الوقت: ${seconds}ث</p>
+        <p>النقاط: ${Math.max(score, 0)}</p>
+    `;
+}
+
+// ===== Spin Wheel Game =====
+const spinMessages = [
+    'أحبك زي ما بحب الحياة', 
+    'أنتِ أجمل ما في حياتي',
+    'بتشتاق لك كل لحظة',
+    'قلبي بينادي باسمك',
+    'أشرقت اسمي أجمل كلمة',
+    'معاك أنسى كل الألم',
+    'أنتِ نور عينّي',
+    'روحي تاعتك يا حبيبتي'
+];
+
+const spinBtn = document.querySelector('.spin-btn');
+if (spinBtn) {
+    spinBtn.addEventListener('click', () => {
+        const wheel = document.getElementById('spinWheel');
+        const randomRotation = Math.random() * 360 + 720;
+        
+        wheel.style.transition = 'transform 4s cubic-bezier(0.33, 0.66, 0.66, 1)';
+        wheel.style.transform = `rotate(${randomRotation}deg)`;
+        
+        setTimeout(() => {
+            const selectedIndex = Math.floor((randomRotation % 360) / 45);
+            const message = spinMessages[selectedIndex];
+            document.getElementById('gameResult').innerHTML = `
+                <h3>${message}</h3>
+                <p>💕</p>
+            `;
+        }, 4000);
+    });
+}
+
+// ===== Time Game =====
+const timeQuestions = {
+    morning: {
+        questions: [
+            { q: 'أول حاجة تفكري فيها في الصباح؟', a: ['أشرقت', 'الشغل', 'النوم'] },
+            { q: 'أحلى وقت في اليوم؟', a: ['مع أشرقت', 'الصباح', 'الليل'] },
+            { q: 'تشتاقي لمين في الصباح؟', a: ['لحبيبي', 'لأمي', 'لصاحباتي'] }
+        ]
+    },
+    afternoon: {
+        questions: [
+            { q: 'الظهيرة فيها؟', a: ['تفكير فيك', 'إرهاق', 'راحة'] },
+            { q: 'أجمل جزء من النهار؟', a: ['الوقت معاك', 'الأكل', 'الاسترخاء'] }
+        ]
+    },
+    evening: {
+        questions: [
+            { q: 'أجمل وقت للحب؟', a: ['المساء معاك', 'الصباح', 'الليل'] },
+            { q: 'مساؤك حلو لما؟', a: ['أتكلم معاك', 'بنام', 'بتفرج تلفزيون'] }
+        ]
+    },
+    night: {
+        questions: [
+            { q: 'في الليل تفكري في؟', a: ['أشرقت', 'الدراسة', 'المستقبل'] },
+            { q: 'أحلى ساعة في الليل؟', a: ['مع حبيبي', 'لوحدي', 'مع أمي'] }
+        ]
+    }
+};
+
+let currentTimeGame = null;
+let currentQuestionIndex = 0;
+
+document.querySelectorAll('.time-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        currentTimeGame = this.dataset.time;
+        currentQuestionIndex = 0;
+        document.querySelector('.time-selector').style.display = 'none';
+        document.getElementById('timeQuestions').style.display = 'block';
+        showTimeQuestion();
+    });
+});
+
+function showTimeQuestion() {
+    const questions = timeQuestions[currentTimeGame].questions;
+    
+    if (currentQuestionIndex >= questions.length) {
+        document.getElementById('timeQuestions').style.display = 'none';
+        document.getElementById('timeMessage').style.display = 'block';
+        return;
+    }
+    
+    const q = questions[currentQuestionIndex];
+    document.getElementById('questionText').textContent = q.q;
+    
+    const optionsDiv = document.getElementById('questionOptions');
+    optionsDiv.innerHTML = '';
+    
+    q.a.forEach(answer => {
+        const btn = document.createElement('button');
+        btn.textContent = answer;
+        btn.className = 'option-btn';
+        btn.addEventListener('click', () => {
+            if (answer === 'أشرقت' || answer === 'لحبيبي' || answer === 'المساء معاك' || answer === 'الوقت معاك') {
+                btn.style.background = '#4CAF50';
+            } else {
+                btn.style.background = '#f44336';
+            }
+            setTimeout(() => {
+                currentQuestionIndex++;
+                showTimeQuestion();
+            }, 1000);
+        });
+        optionsDiv.appendChild(btn);
+    });
+}
+
+// ===== Initialize games when page loads =====
+document.addEventListener('DOMContentLoaded', function() {
+    const gameTypeMemory = document.querySelector('[data-game="memory"]');
+    if (gameTypeMemory && gameTypeMemory.classList.contains('active')) {
+        initMemoryGame();
+    }
+});
